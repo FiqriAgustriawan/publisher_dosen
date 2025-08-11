@@ -51,8 +51,8 @@ export function initializeTheme() {
 export function useAppearance() {
     const [appearance, setAppearance] = useState<Appearance>('system');
 
-    const theme = appearance === 'dark' || (appearance === 'system' && prefersDark()) 
-        ? themeConfig.dark 
+    const theme = appearance === 'dark' || (appearance === 'system' && prefersDark())
+        ? themeConfig.dark
         : themeConfig.light;
 
     const updateAppearance = useCallback((mode: Appearance) => {

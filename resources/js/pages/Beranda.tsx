@@ -11,7 +11,7 @@ import {
 import { MdOutlineMailOutline } from 'react-icons/md';
 import { useAppearance } from '@/hooks/use-appearance';
 
-export default function Welcome() {
+export default function Welcome({ publications }: { publications: any[] }) {
     const { theme } = useAppearance();
     const auth = (usePage().props as any)?.auth;
 
@@ -60,10 +60,10 @@ export default function Welcome() {
                         <Link href="#" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
                             Katalog Buku
                         </Link>
-                        <Link href="/kontak" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
+                        <Link href="/Contact" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
                             Kontak
                         </Link>
-                       {auth.user && (
+                        {auth.user && (
                             <Link
                                 href={route('dashboard')}
                                 className="bg-white text-green-800 dark:bg-gray-200 dark:text-gray-800 px-4 py-1.5 rounded-full hover:bg-green-50 dark:hover:bg-gray-300 transition-colors"
@@ -113,7 +113,7 @@ export default function Welcome() {
                 </div>
             </section>
 
-           
+
 
             {/* Publications Section */}
             <section className="py-16">
