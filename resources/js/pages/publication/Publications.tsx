@@ -1,7 +1,9 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { useAppearance } from '@/hooks/use-appearance';
-import { FiClock, FiUser, FiExternalLink, FiCalendar, FiArrowRight } from 'react-icons/fi';
+import { FiClock, FiUser, FiExternalLink, FiCalendar, FiArrowRight, FiSearch } from 'react-icons/fi';
 import { useState } from 'react';
+import Navbar from '@/components/layout/navbar';
+import Footer from '@/components/layout/footer';
 
 interface Publication {
   id: number;
@@ -14,7 +16,7 @@ interface Publication {
     name: string;
   };
 }
-import Navbar from '@/components/layout/navbar';
+
 export default function Publications({ publications }: { publications: Publication[] }) {
   const { theme } = useAppearance();
   const auth = (usePage().props as any)?.auth;
@@ -32,28 +34,39 @@ export default function Publications({ publications }: { publications: Publicati
 
       <Navbar />
 
-      {/* Hero Section */}
-      <section className={`${theme.background} py-16 relative overflow-hidden`}>
-        <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-5 bg-repeat" />
+      {/* Hero Section dengan Background Hijau */}
+      <section className="bg-gradient-to-r from-green-900 to-green-700 py-20 text-white relative">
+        {/* Background pattern untuk tekstur */}
+        <div className="absolute inset-0 bg-[url('/pattern.svg')] opacity-10"></div>
+
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className={`text-3xl md:text-5xl font-bold mb-6 ${theme.primary}`}>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white drop-shadow-md">
               Publikasi Jurnal Kesehatan
             </h1>
-            <p className={`text-lg mb-8 max-w-2xl mx-auto ${theme.text.secondary}`}>
+            <p className="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
               Temukan berbagai publikasi jurnal tentang inovasi kesehatan, penelitian terbaru, dan pengabdian masyarakat
             </p>
-            <div className="max-w-lg mx-auto">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Cari publikasi..."
-                  className={`w-full px-5 py-3 rounded-lg focus:ring-2 focus:ring-green-500 outline-none bg-white dark:bg-gray-800`}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <button className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-green-700 text-white p-1.5 rounded-full">
-                  <FiArrowRight />
+
+            {/* Search Bar dengan Kontras yang Lebih Baik */}
+            <div className="relative max-w-2xl mx-auto">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <FiSearch className="h-5 w-5 text-white" />
+              </div>
+              <input
+                type="text"
+                placeholder="Cari publikasi..."
+                className="block w-full pl-10 pr-10 py-3 border border-green-600 rounded-lg bg-white/25 focus:bg-white/30 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-green-400 placeholder-white text-white font-medium shadow-md"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              {/* Clear button */}
+              <div className={`absolute right-3 inset-y-0 flex items-center transition-opacity duration-300 ${searchTerm ? 'opacity-100' : 'opacity-0'}`}>
+                <button
+                  onClick={() => setSearchTerm('')}
+                  className="text-white/70 hover:text-white p-1"
+                >
+                  ✕
                 </button>
               </div>
             </div>
@@ -65,13 +78,31 @@ export default function Publications({ publications }: { publications: Publicati
       <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className={`text-2xl font-bold mb-8 ${theme.primary}`}>
-            {filteredPublications.length} Publikasi Tersedia
+            {filteredPublications.length > 0
+              ? `${filteredPublications.length} Publikasi Tersedia`
+              : 'Tidak ada publikasi yang sesuai dengan pencarian Anda'}
           </h2>
 
           {filteredPublications.length === 0 ? (
-            <div className="text-center py-12">
-              <p className={`text-xl ${theme.text.secondary}`}>
-                Tidak ditemukan publikasi yang sesuai dengan pencarian Anda.
+            <div className="text-center py-12 px-4 border border-gray-200 dark:border-gray-700 rounded-xl bg-gray-50 dark:bg-gray-800/50 shadow-sm">
+              <div className="mx-auto h-16 w-16 text-gray-400 dark:text-gray-300 mb-4">📚</div>
+              <h3 className="mt-4 text-2xl font-medium text-gray-900 dark:text-white">
+                {searchTerm ? 'Tidak ada publikasi yang sesuai dengan pencarian' : 'Belum ada publikasi tersedia'}
+              </h3>
+              <p className="mt-2 text-gray-600 dark:text-gray-300 max-w-md mx-auto">
+                {searchTerm ? (
+                  <span>
+                    Silakan coba dengan kata kunci lain atau{' '}
+                    <button
+                      onClick={() => setSearchTerm('')}
+                      className="text-green-600 dark:text-green-400 font-medium hover:underline"
+                    >
+                      reset pencarian
+                    </button>
+                  </span>
+                ) : (
+                  'Publikasi akan segera tersedia'
+                )}
               </p>
             </div>
           ) : (
@@ -96,7 +127,7 @@ export default function Publications({ publications }: { publications: Publicati
                     <h3 className={`text-xl font-bold mb-3 ${theme.text.primary}`}>
                       {pub.title}
                     </h3>
-                    <p className={`line-clamp-3 mb-4 ${theme.text.secondary}`}>
+                    <p className={`line-clamp-3 mb-4 ${theme.text.primary}`}>
                       {pub.description}
                     </p>
                     <div className="flex items-center gap-2 mb-3">
@@ -125,6 +156,8 @@ export default function Publications({ publications }: { publications: Publicati
           )}
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

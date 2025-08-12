@@ -21,7 +21,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Katalog Buku',
-        href: '/catalogs',
+        href: '/manage-catalogs',
         icon: BookOpen,
     },
 ];

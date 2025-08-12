@@ -9,6 +9,7 @@ import {
   FiGlobe
 } from 'react-icons/fi';
 import Navbar from '@/components/layout/navbar';
+import Footer from '@/components/layout/footer';
 
 export default function Contact() {
   const { theme } = useAppearance();
@@ -123,6 +124,7 @@ export default function Contact() {
           </div>
         </div>
       </section>
+            <Footer />
     </div>
   );
 }

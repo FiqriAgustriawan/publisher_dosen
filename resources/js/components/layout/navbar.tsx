@@ -72,8 +72,8 @@ export default function Navbar() {
               Publikasi
             </Link>
             <Link
-              href="#"
-              className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}
+              href={route('catalogs.index')}
+              className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors ${usePage().url.startsWith('/catalogs') ? 'border-b-2 border-white dark:border-gray-800' : ''}`}
             >
               Katalog Buku
             </Link>
@@ -148,8 +148,10 @@ export default function Navbar() {
             Publikasi
           </Link>
           <Link
-            href="#"
-            className={`py-2 px-4 rounded-lg ${theme.headerText} hover:bg-green-800/20`}
+            href={route('catalogs.index')}
+            className={`py-2 px-4 rounded-lg ${usePage().url.startsWith('/catalogs')
+              ? 'bg-green-800 text-white'
+              : `${theme.headerText} hover:bg-green-800/20`}`}
           >
             Katalog Buku
           </Link>
@@ -177,18 +179,7 @@ export default function Navbar() {
               </>
             ) : (
               <div className="flex flex-col space-y-2">
-                <Link
-                  href={route('login')}
-                  className="py-2 px-4 bg-green-800 text-white rounded-lg block text-center"
-                >
-                  Login
-                </Link>
-                <Link
-                  href={route('register')}
-                  className="py-2 px-4 border border-green-600 text-green-400 rounded-lg block text-center"
-                >
-                  Register
-                </Link>
+                {/* Login/Register buttons are removed per request */}
               </div>
             )}
           </div>

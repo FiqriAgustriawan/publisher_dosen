@@ -140,4 +140,16 @@ class CatalogController extends Controller
 
     return redirect()->route('catalogs.index')->with('success', 'Katalog buku berhasil dihapus');
   }
+
+  /**
+   * Display catalogs management page.
+   */
+  public function manage()
+  {
+    $catalogs = Catalog::with('user')->latest()->get();
+    
+    return Inertia::render('catalog/ManageCatalogs', [
+        'catalogs' => $catalogs
+    ]);
+  }
 }

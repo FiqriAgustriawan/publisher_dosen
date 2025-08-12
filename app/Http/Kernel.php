@@ -15,6 +15,18 @@ class Kernel extends HttpKernel
    */
   protected $routeMiddleware = [
     // ...existing code...
-    'editor' => \App\Http\Middleware\EditorOnly::class,
+   
+  ];
+
+  /**
+   * The application's global HTTP middleware stack.
+   *
+   * This stack is run during every request to your application.
+   *
+   * @var array
+   */
+  protected $middleware = [
+    // ... middleware lainnya
+    \App\Http\Middleware\HandleAppearance::class,
   ];
 }
