@@ -1,5 +1,5 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { themeConfig } from '@/lib/theme-config';
+import { useAppearance } from '@/hooks/use-appearance';
 import {
     FiBook,
     FiUsers,
@@ -9,71 +9,44 @@ import {
     FiArrowRight
 } from 'react-icons/fi';
 import { MdOutlineMailOutline } from 'react-icons/md';
-import { useAppearance } from '@/hooks/use-appearance';
+import Navbar from '@/components/layout/navbar';
+import Footer from '@/components/layout/footer';
 
-export default function Welcome({ publications }: { publications: any[] }) {
+interface Publication {
+    id: number;
+    title: string;
+    image: string | null;
+    created_at: string;
+    user: {
+        name: string;
+    };
+}
+
+interface Catalog {
+    id: number;
+    nama: string;
+    deskripsi: string;
+    gambar_sampul: string | null;
+    created_at: string;
+}
+
+interface WelcomeProps {
+    publications: Publication[];
+    catalogs?: Catalog[]; // Make catalogs optional to handle undefined case
+}
+
+export default function Welcome({ publications = [], catalogs = [] }: WelcomeProps) {
     const { theme } = useAppearance();
     const auth = (usePage().props as any)?.auth;
 
-    const dummyPublications = [
-        {
-            id: 1,
-            title: "Penelitian Kesehatan Masyarakat di Era Digital",
-            author: "Dr. Sutomo",
-            date: "2025-08-01",
-            image: "https://source.unsplash.com/random/400x300/?medical",
-        },
-        {
-            id: 2,
-            title: "Inovasi Pendidikan Tinggi",
-            author: "Prof. Sarah Johnson",
-            date: "2025-07-28",
-            image: "https://source.unsplash.com/random/400x300/?education",
-        },
-    ];
+    console.log('Props received:', { publications, catalogs });
 
     return (
         <div className={`${theme.background} min-h-screen`}>
             <Head title="Welcome" />
 
-            {/* Header */}
-            <header className={`${theme.header} sticky top-0 z-50 shadow-lg`}>
-                <div className="container mx-auto px-4  py-3 flex items-center justify-between">
-                    <div className="flex items-center space-x-3">
-                        <img src="/images/logo.png" alt="CAHJ Logo" className="h-12 w-auto" />
-                        <div className="hidden sm:block">
-                            <h1 className={`font-bold text-lg ${theme.headerText}`}>
-                                CELEBES ADVANCE
-                            </h1>
-                            <p className={`text-sm ${theme.text.secondary}`}>
-                                HEALTH JOURNAL
-                            </p>
-                        </div>
-                    </div>
-                    <nav className="hidden md:flex space-x-6">
-                        <Link href="/" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
-                            Beranda
-                        </Link>
-                        <Link href="#" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
-                            Publikasi
-                        </Link>
-                        <Link href="#" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
-                            Katalog Buku
-                        </Link>
-                        <Link href="/Contact" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
-                            Kontak
-                        </Link>
-                        {auth.user && (
-                            <Link
-                                href={route('dashboard')}
-                                className="bg-white text-green-800 dark:bg-gray-200 dark:text-gray-800 px-4 py-1.5 rounded-full hover:bg-green-50 dark:hover:bg-gray-300 transition-colors"
-                            >
-                                Dashboard
-                            </Link>
-                        )}
-                    </nav>
-                </div>
-            </header>
+            {/* Use the new Navbar component */}
+            <Navbar />
 
             {/* Hero Section */}
             <section className={`${theme.background} py-24 relative overflow-hidden`}>
@@ -90,15 +63,18 @@ export default function Welcome({ publications }: { publications: any[] }) {
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4">
                                     <Link
-                                        href={route('login')}
+                                        href={route('publications')}
                                         className="bg-green-800 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg flex items-center justify-center space-x-2"
                                     >
                                         <span>Lihat Publikasi</span>
                                         <FiArrowRight className="w-5 h-5" />
                                     </Link>
-                                    <button className="border-2 border-green-800 text-green-800 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors">
+                                    <Link
+                                        href={route('catalogs.index')}
+                                        className="border-2 border-green-800 text-green-800 px-8 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors"
+                                    >
                                         Katalog Buku
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="hidden md:block">
@@ -113,39 +89,153 @@ export default function Welcome({ publications }: { publications: any[] }) {
                 </div>
             </section>
 
-
-
             {/* Publications Section */}
             <section className="py-16">
                 <div className="container mx-auto px-4">
                     <h2 className={`text-3xl font-bold text-center ${theme.primary} mb-12`}>
                         Publikasi Terbaru
                     </h2>
-                    <div className="grid md:grid-cols-3 gap-8">
-                        {dummyPublications.map((pub) => (
-                            <div
-                                key={pub.id}
-                                className={`${theme.card} rounded-lg shadow-lg overflow-hidden hover:-translate-y-1 transition-transform ${theme.border}`}
-                            >
-                                <img
-                                    src={pub.image}
-                                    alt={pub.title}
-                                    className="w-full h-48 object-cover"
-                                />
-                                <div className="p-6">
-                                    <h3 className={`text-xl font-bold mb-2 ${theme.primary}`}>
-                                        {pub.title}
-                                    </h3>
-                                    <p className={theme.text.secondary}>{pub.author}</p>
-                                    <p className={theme.text.muted}>
-                                        {new Date(pub.date).toLocaleDateString()}
-                                    </p>
+                    {publications.length === 0 ? (
+                        <p className="text-center text-gray-500">Belum ada publikasi</p>
+                    ) : (
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {publications.map((pub) => (
+                                <div
+                                    key={pub.id}
+                                    className={`${theme.card} rounded-lg shadow-lg overflow-hidden hover:-translate-y-1 transition-transform ${theme.border}`}
+                                >
+                                    {pub.image ? (
+                                        <img
+                                            src={`/storage/${pub.image}`}
+                                            alt={pub.title}
+                                            className="w-full h-48 object-cover"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-48 bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                                            <span className="text-gray-400 dark:text-gray-500">Tidak ada gambar</span>
+                                        </div>
+                                    )}
+                                    <div className="p-6">
+                                        <h3 className={`text-xl font-bold mb-2 ${theme.primary}`}>
+                                            {pub.title}
+                                        </h3>
+                                        <p className={theme.text.secondary}>{pub.user.name}</p>
+                                        <p className={theme.text.muted}>
+                                            {new Date(pub.created_at).toLocaleDateString()}
+                                        </p>
+                                        <div className="mt-4">
+                                            <Link
+                                                href={route('publications.show', pub.id)}
+                                                className="text-green-700 hover:text-green-900 font-medium flex items-center gap-1"
+                                            >
+                                                Baca Selengkapnya
+                                                <FiArrowRight />
+                                            </Link>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
+                    )}
+                    <div className="text-center mt-12">
+                        <Link
+                            href={route('publications')}
+                            className="inline-flex items-center gap-2 bg-green-800 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                        >
+                            Lihat Semua Publikasi
+                            <FiArrowRight />
+                        </Link>
                     </div>
                 </div>
             </section>
+
+            {/* Katalog Buku Section - Only show if catalogs exist */}
+            {Array.isArray(catalogs) ? (
+                catalogs.length > 0 ? (
+                    <section className="py-16 bg-gray-50 dark:bg-gray-900">
+                        <div className="container mx-auto px-4">
+                            <h2 className={`text-3xl font-bold text-center ${theme.primary} mb-12`}>
+                                Katalog Buku
+                            </h2>
+
+                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                {/* Safely use slice only after we've confirmed catalogs is an array */}
+                                {catalogs.slice(0, 4).map((catalog) => (
+                                    <div
+                                        key={catalog.id}
+                                        className={`${theme.card} rounded-lg shadow-lg overflow-hidden hover:-translate-y-1 transition-transform ${theme.border}`}
+                                    >
+                                        <div className="relative h-56 bg-gray-200 dark:bg-gray-700">
+                                            {catalog.gambar_sampul ? (
+                                                <img
+                                                    src={`/storage/${catalog.gambar_sampul}`}
+                                                    alt={catalog.nama}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-center">
+                                                    <FiBook className="w-12 h-12 text-gray-400 dark:text-gray-500" />
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="p-4">
+                                            <h3 className={`text-lg font-bold mb-2 ${theme.primary} line-clamp-1`}>
+                                                {catalog.nama}
+                                            </h3>
+                                            <p className={`${theme.text.secondary} text-sm mb-3 line-clamp-2`}>
+                                                {catalog.deskripsi}
+                                            </p>
+                                            <Link
+                                                href={route('catalogs.show', catalog.id)}
+                                                className="text-green-700 hover:text-green-900 font-medium flex items-center gap-1 text-sm"
+                                            >
+                                                Lihat Detail
+                                                <FiArrowRight />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            <div className="text-center mt-12">
+                                <Link
+                                    href={route('catalogs.index')}
+                                    className="inline-flex items-center gap-2 border-2 border-green-800 text-green-800 hover:bg-green-50 px-6 py-3 rounded-lg font-semibold transition-colors"
+                                >
+                                    Lihat Semua Katalog
+                                    <FiArrowRight />
+                                </Link>
+                            </div>
+                        </div>
+                    </section>
+                ) : (
+                    <section className="py-16 bg-gray-50 dark:bg-gray-900">
+                        <div className="container mx-auto px-4 text-center">
+                            <h2 className={`text-3xl font-bold ${theme.primary} mb-6`}>Katalog Buku</h2>
+                            <div className="py-12">
+                                <FiBook className="mx-auto h-16 w-16 text-gray-400 dark:text-gray-500" />
+                                <p className="mt-4 text-lg text-gray-600 dark:text-gray-400">
+                                    Belum ada buku dalam katalog
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+                )
+            ) : (
+                <section className="py-16 bg-gray-50 dark:bg-gray-900">
+                    <div className="container mx-auto px-4 text-center">
+                        <h2 className={`text-3xl font-bold ${theme.primary} mb-6`}>Katalog Buku</h2>
+                        <div className="py-12">
+                            <p className="text-lg text-gray-600 dark:text-gray-400">
+                                Gagal memuat data katalog
+                            </p>
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* Add Footer */}
+            <Footer />
         </div>
     );
 }

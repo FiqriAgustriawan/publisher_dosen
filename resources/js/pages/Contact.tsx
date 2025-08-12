@@ -8,6 +8,7 @@ import {
   FiClock,
   FiGlobe
 } from 'react-icons/fi';
+import Navbar from '@/components/layout/navbar';
 
 export default function Contact() {
   const { theme } = useAppearance();
@@ -16,46 +17,7 @@ export default function Contact() {
   return (
     <div className={`${theme.background} min-h-screen`}>
       <Head title="Kontak" />
-
-      {/* Header - sama dengan welcome.tsx */}
-      <header className={`${theme.header} sticky top-0 z-50 shadow-lg`}>
-        <div className="container mx-auto px-4  py-3 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <img src="/images/logo.png" alt="CAHJ Logo" className="h-12 w-auto" />
-            <div className="hidden sm:block">
-              <h1 className={`font-bold text-lg ${theme.headerText}`}>
-                CELEBES ADVANCE
-              </h1>
-              <p className={`text-sm ${theme.text.secondary}`}>
-                HEALTH JOURNAL
-              </p>
-            </div>
-          </div>
-          <nav className="hidden md:flex space-x-6">
-            <Link href="/" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
-              Beranda
-            </Link>
-            <Link href="#" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
-              Publikasi
-            </Link>
-            <Link href="#" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
-              Katalog Buku
-            </Link>
-            <Link href="/Contact" className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors`}>
-              Kontak
-            </Link>
-            {auth.user && (
-              <Link
-                href={route('dashboard')}
-                className="bg-white text-green-800 dark:bg-gray-200 dark:text-gray-800 px-4 py-1.5 rounded-full hover:bg-green-50 dark:hover:bg-gray-300 transition-colors"
-              >
-                Dashboard
-              </Link>
-            )}
-          </nav>
-        </div>
-      </header>
-
+      <Navbar />
       {/* Hero Contact Section */}
       <section className={`${theme.background} pt-20 pb-16 relative overflow-hidden`}>
         <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-5 bg-repeat" />

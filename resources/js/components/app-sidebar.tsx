@@ -4,26 +4,24 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { LayoutDashboard, FileText, BookOpen, Settings } from 'lucide-react';
 import AppLogo from './app-logo';
 
+// Updated navigation items sesuai dengan struktur folder
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         href: '/dashboard',
-        icon: LayoutGrid,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
+        icon: LayoutDashboard,
     },
     {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
+        title: 'Publikasi',
+        href: '/manage-publications',
+        icon: FileText,
+    },
+    {
+        title: 'Katalog Buku',
+        href: '/catalogs',
         icon: BookOpen,
     },
 ];
