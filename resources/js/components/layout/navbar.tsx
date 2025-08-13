@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, usePage } from '@inertiajs/react';
 import { useAppearance } from '@/hooks/use-appearance';
 import { FiMenu, FiX } from 'react-icons/fi';
+import AppearanceToggleTab from '@/components/appearance-tabs';
 
 export default function Navbar() {
   const { theme } = useAppearance();
@@ -10,31 +11,16 @@ export default function Navbar() {
   const [visible, setVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
 
-  // Handle scroll behavior
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.scrollY;
-      const isScrollingDown = prevScrollPos < currentScrollPos;
-      const isScrollingUp = prevScrollPos > currentScrollPos;
-      const isScrollingFarEnough = Math.abs(prevScrollPos - currentScrollPos) > 10;
-
-      if ((isScrollingDown && isScrollingFarEnough && currentScrollPos > 100) || currentScrollPos < 10) {
-        setVisible(isScrollingDown ? false : true);
-      } else if (isScrollingUp && isScrollingFarEnough) {
-        setVisible(true);
-      }
-
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
       setPrevScrollPos(currentScrollPos);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos]);
-
-  // Close sidebar when route changes
-  useEffect(() => {
-    setIsOpen(false);
-  }, [usePage().url]);
 
   return (
     <>
@@ -51,14 +37,14 @@ export default function Navbar() {
               <h1 className={`font-bold text-xs md:text-lg ${theme.headerText} leading-tight`}>
                 CELEBES ADVANCE
               </h1>
-              <p className={`text-[10px] md:text-sm ${theme.text.secondary} leading-tight`}>
+              <p className={`text-[10px] md:text-sm ${theme.text.light} leading-tight`}>
                 HEALTH JOURNAL
               </p>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6">
+          <nav className="hidden md:flex items-center space-x-6">
             <Link
               href="/"
               className={`${theme.headerText} hover:text-green-200 dark:hover:text-gray-300 transition-colors ${usePage().url === '/' ? 'border-b-2 border-white dark:border-gray-800' : ''}`}
@@ -83,6 +69,10 @@ export default function Navbar() {
             >
               Kontak
             </Link>
+            
+            {/* Gunakan AppearanceToggleTab yang sudah ada */}
+            <AppearanceToggleTab className="scale-90" />
+            
             {auth?.user && (
               <Link
                 href={route('dashboard')}
@@ -94,27 +84,30 @@ export default function Navbar() {
           </nav>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-md focus:outline-none"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? (
-              <FiX className={`w-6 h-6 ${theme.headerText}`} />
-            ) : (
-              <FiMenu className={`w-6 h-6 ${theme.headerText}`} />
-            )}
-          </button>
+          <div className="md:hidden flex items-center space-x-2">
+            <button
+              className="p-2 rounded-md focus:outline-none"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <FiX className={`w-6 h-6 ${theme.headerText}`} />
+              ) : (
+                <FiMenu className={`w-6 h-6 ${theme.headerText}`} />
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Sidebar */}
+      {/* Mobile sidebar overlay */}
       <div
         className={`md:hidden fixed inset-0 bg-black z-40 transition-opacity duration-300 ${isOpen ? 'opacity-50 pointer-events-auto' : 'opacity-0 pointer-events-none'
           }`}
         onClick={() => setIsOpen(false)}
       />
 
+      {/* Mobile sidebar */}
       <div
         className={`md:hidden fixed top-0 right-0 w-64 h-full ${theme.header} z-50 p-4 shadow-xl transition-transform duration-300 ease-in-out ${isOpen ? 'transform-none' : 'transform translate-x-full'
           }`}
@@ -123,7 +116,7 @@ export default function Navbar() {
           <img src="/images/logo.png" alt="CAHJ Logo" className="h-10 w-auto" />
           <button
             onClick={() => setIsOpen(false)}
-            className="p-2 rounded-full hover:bg-gray-700"
+            className="p-2 rounded-full hover:bg-green-700"
             aria-label="Close menu"
           >
             <FiX className={`w-5 h-5 ${theme.headerText}`} />
@@ -136,6 +129,7 @@ export default function Navbar() {
             className={`py-2 px-4 rounded-lg ${usePage().url === '/'
               ? 'bg-green-800 text-white'
               : `${theme.headerText} hover:bg-green-800/20`}`}
+            onClick={() => setIsOpen(false)}
           >
             Beranda
           </Link>
@@ -144,6 +138,7 @@ export default function Navbar() {
             className={`py-2 px-4 rounded-lg ${usePage().url.startsWith('/publications')
               ? 'bg-green-800 text-white'
               : `${theme.headerText} hover:bg-green-800/20`}`}
+            onClick={() => setIsOpen(false)}
           >
             Publikasi
           </Link>
@@ -152,6 +147,7 @@ export default function Navbar() {
             className={`py-2 px-4 rounded-lg ${usePage().url.startsWith('/catalogs')
               ? 'bg-green-800 text-white'
               : `${theme.headerText} hover:bg-green-800/20`}`}
+            onClick={() => setIsOpen(false)}
           >
             Katalog Buku
           </Link>
@@ -160,29 +156,33 @@ export default function Navbar() {
             className={`py-2 px-4 rounded-lg ${usePage().url === '/Contact'
               ? 'bg-green-800 text-white'
               : `${theme.headerText} hover:bg-green-800/20`}`}
+            onClick={() => setIsOpen(false)}
           >
             Kontak
           </Link>
 
-          <div className="pt-4 border-t border-gray-600">
-            {auth?.user ? (
-              <>
-                <div className="mb-2 px-4 text-sm text-gray-300">
+          {/* Appearance toggle untuk mobile */}
+          <div className="px-4 py-2">
+            <p className={`text-sm ${theme.headerText} mb-2`}>Tema</p>
+            <AppearanceToggleTab className="w-full" />
+          </div>
+
+          {auth?.user && (
+            <>
+              <div className="pt-4 border-t border-gray-600">
+                <div className={`mb-2 px-4 text-sm ${theme.text.secondary}`}>
                   Selamat datang, {auth.user.name}
                 </div>
                 <Link
                   href={route('dashboard')}
                   className="py-2 px-4 bg-green-800 text-white rounded-lg block"
+                  onClick={() => setIsOpen(false)}
                 >
                   Dashboard
                 </Link>
-              </>
-            ) : (
-              <div className="flex flex-col space-y-2">
-                {/* Login/Register buttons are removed per request */}
               </div>
-            )}
-          </div>
+            </>
+          )}
         </nav>
       </div>
 

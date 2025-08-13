@@ -20,8 +20,15 @@ class PublicationController extends Controller
 
   public function show(Publication $publication)
   {
+    // Mengambil hanya komentar yang sudah disetujui
+    $approved_comments = $publication->comments()
+      ->where('status', 'approved')
+      ->orderBy('created_at', 'desc')
+      ->get();
+
     return Inertia::render('publication/PublicationDetail', [
-      'publication' => $publication->load('user')
+      'publication' => $publication->load('user'),
+      'approved_comments' => $approved_comments
     ]);
   }
 

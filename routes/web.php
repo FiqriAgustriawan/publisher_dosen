@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\PublicationController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\CommentController;
 use App\Models\Publication;
 use App\Models\Catalog;
 use App\Models\Comment;
@@ -39,7 +40,8 @@ Route::middleware(['auth'])->group(function () {
             'stats' => [
                 'totalPublications' => Publication::count(),
                 'totalCatalogs' => Catalog::count(),
-                'totalComments' => Comment::count()
+                'totalComments' => Comment::count(),
+                'pendingComments' => Comment::where('status', 'pending')->count() // Tambahkan ini
             ]
         ]);
     })->name('dashboard');
@@ -58,6 +60,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/catalogs/{catalog}/edit', [CatalogController::class, 'edit'])->name('catalogs.edit');
         Route::put('/catalogs/{catalog}', [CatalogController::class, 'update'])->name('catalogs.update');
         Route::delete('/catalogs/{catalog}', [CatalogController::class, 'destroy'])->name('catalogs.destroy');
+
+        // Comments management routes
+        Route::get('/comments', [CommentController::class, 'adminIndex'])->name('admin.comments.index');
+        Route::put('/comments/{comment}/approve', [CommentController::class, 'approve'])->name('admin.comments.approve');
+        Route::put('/comments/{comment}/reject', [CommentController::class, 'reject'])->name('admin.comments.reject');
+        Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('admin.comments.destroy');
     });
 });
 
@@ -69,6 +77,10 @@ Route::fallback(function () {
         'description' => 'Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.'
     ]);
 });
+
+// Public comment route
+Route::post('/comments', [CommentController::class, 'store'])
+    ->name('comments.store');
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

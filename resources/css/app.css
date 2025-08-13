@@ -162,3 +162,30 @@
 .ease-in-out {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* Tambahkan loading overlay jika diperlukan */
+.theme-changing {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-changing.dark {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Smooth transition untuk elemen utama */
+html {
+  transition: background-color 0.3s ease;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

@@ -15,6 +15,12 @@ export default defineConfig({
         react(),
         tailwindcss(),
     ],
+     define: {
+        // Tambahkan placeholder untuk process.env yang digunakan di komponent
+        'process.env': {
+            MIX_RECAPTCHA_SITE_KEY: 'development-key',
+        },
+    },
     esbuild: {
         jsx: 'automatic',
     },

@@ -4,10 +4,10 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutDashboard, FileText, BookOpen, Settings } from 'lucide-react';
+import { LayoutDashboard, FileText, BookOpen, Settings, MessageSquare } from 'lucide-react';
 import AppLogo from './app-logo';
 
-// Updated navigation items sesuai dengan struktur folder
+// Updated navigation items dengan tambahan menu Komentar
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
@@ -23,6 +23,11 @@ const mainNavItems: NavItem[] = [
         title: 'Katalog Buku',
         href: '/manage-catalogs',
         icon: BookOpen,
+    },
+    {
+        title: 'Komentar',
+        href: '/admin/comments',
+        icon: MessageSquare,
     },
 ];
 

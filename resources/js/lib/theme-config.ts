@@ -13,6 +13,7 @@ type ThemeConfig = {
         primary: string;
         secondary: string;
         muted: string;
+        light:string;
     };
 };
 
@@ -30,8 +31,9 @@ export const themeConfig: Record<'light' | 'dark', ThemeConfig> = {
         },
         text: {
             primary: 'text-gray-900',
-            secondary: 'text-gray-300',
-            muted: 'text-gray-500'
+            secondary: 'text-gray-600',
+            muted: 'text-gray-500',
+            light: 'text-gray-200'
         }
     },
     dark: {
@@ -48,7 +50,8 @@ export const themeConfig: Record<'light' | 'dark', ThemeConfig> = {
         text: {
             primary: 'text-white',
             secondary: 'text-zinc-300',
-            muted: 'text-zinc-400'
+            muted: 'text-zinc-400',
+            light: 'text-zinc-500'
         }
     }
 };

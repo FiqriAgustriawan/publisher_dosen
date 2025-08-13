@@ -23,6 +23,7 @@ import 'aos/dist/aos.css';
 interface Publication {
     id: number;
     title: string;
+    description: string;
     image: string | null;
     created_at: string;
     user: {
@@ -112,7 +113,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
             </section>
 
             {/* Tentang Lembaga Section */}
-            <section className="py-20 relative overflow-hidden" data-aos="fade-up">
+            <section className="py-20 relative overflow-hidden dark:bg-green-900/20  " data-aos="fade-up">
                 <div className="absolute -right-32 -bottom-32 w-96 h-96 bg-green-100 dark:bg-green-900/20 rounded-full opacity-50"></div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
@@ -171,7 +172,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                 </div>
             </section>
 
-            {/* Publications Section - Timeline Style */}
+            {/* Publications Section - Modern Card Layout */}
             <section className="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
@@ -183,13 +184,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                 Publikasi Terkini
                             </h2>
                         </div>
-                        <Link
-                            href={route('publications')}
-                            className="mt-4 md:mt-0 inline-flex items-center gap-2 text-green-700 dark:text-green-500 hover:text-green-900 dark:hover:text-green-400 font-medium group"
-                        >
-                            Lihat Semua Publikasi
-                            <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-                        </Link>
+
                     </div>
 
                     {publications.length === 0 ? (
@@ -210,37 +205,89 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                             </Link>
                         </div>
                     ) : (
-                        <div className="relative">
-                            {/* Timeline line */}
-                            <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-px bg-green-200 dark:bg-green-800 transform md:translate-x-px"></div>
+                        <>
+                            {/* Featured Publication - Large Card */}
+                            {publications.length > 0 && (
+                                <div className="mb-10" data-aos="fade-up">
+                                    <div className="grid md:grid-cols-5 gap-6 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700">
+                                        <div className="md:col-span-2 h-64 md:h-auto relative">
+                                            {publications[0].image ? (
+                                                <img
+                                                    src={`/storage/${publications[0].image}`}
+                                                    alt={publications[0].title}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-gradient-to-br from-green-700 via-green-600 to-green-500 flex items-center justify-center">
+                                                    <FiFileText className="w-16 h-16 text-white/80" />
+                                                </div>
+                                            )}
+                                            <div className="absolute top-4 left-4">
+                                                <div className="px-2.5 py-1 bg-green-700 text-white text-xs font-medium rounded-full">
+                                                    Featured
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="md:col-span-3 p-6 md:p-8 flex flex-col justify-between">
+                                            <div>
+                                                <div className="flex items-center gap-2 mb-3">
+                                                    <div className="w-8 h-8 bg-green-100 dark:bg-green-900/50 rounded-full flex items-center justify-center">
+                                                        <FiUsers className="w-4 h-4 text-green-700 dark:text-green-400" />
+                                                    </div>
+                                                    <span className={`text-sm ${theme.text.secondary}`}>{publications[0].user.name}</span>
+                                                    <span className="mx-2 text-gray-300 dark:text-gray-600">•</span>
+                                                    <span className={`text-sm ${theme.text.muted}`}>
+                                                        {new Date(publications[0].created_at).toLocaleDateString('id-ID', {
+                                                            day: 'numeric',
+                                                            month: 'long',
+                                                            year: 'numeric'
+                                                        })}
+                                                    </span>
+                                                </div>
+                                                <h3 className={`text-2xl font-bold ${theme.primary} mb-4`}>{publications[0].title}</h3>
 
-                            {/* Timeline items */}
-                            <div className="relative z-10">
-                                {publications.slice(0, 4).map((pub, index) => (
+                                                {/* Tambahkan deskripsi singkat di sini */}
+                                                <p className={`${theme.text.secondary} mb-6 line-clamp-3`}>
+                                                    {publications[0].description ||
+                                                        "Publikasi ini membahas tentang inovasi terbaru dalam bidang kesehatan masyarakat dengan pendekatan yang komprehensif dan berbasis bukti ilmiah."}
+                                                </p>
+                                            </div>
+                                            <Link
+                                                href={route('publications.show', publications[0].id)}
+                                                className="inline-flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-5 py-2.5 rounded-lg font-medium transition-colors w-full md:w-auto"
+                                            >
+                                                Baca Publikasi
+                                                <FiArrowRight className="w-4 h-4" />
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Publications Grid */}
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {publications.slice(1, 4).map((pub, index) => (
                                     <div
                                         key={pub.id}
-                                        className={`mb-12 relative ${index % 2 === 0 ? 'md:pr-12 md:text-right md:ml-auto md:mr-0' : 'md:pl-12'} md:w-1/2`}
-                                        data-aos={index % 2 === 0 ? "fade-left" : "fade-right"}
+                                        className="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100 dark:border-gray-700"
+                                        data-aos="fade-up"
                                         data-aos-delay={index * 100}
                                     >
-                                        {/* Timeline node */}
-                                        <div className={`absolute top-0 ${index % 2 === 0 ? 'left-0 md:-left-3' : 'left-0 md:-left-3'} md:left-auto md:right-0 md:-right-3 w-6 h-6 rounded-full bg-white border-4 border-green-500 dark:bg-gray-800`}></div>
-
-                                        {/* Content card */}
-                                        <div className={`${theme.card} shadow-lg rounded-xl overflow-hidden ml-8 md:ml-0 hover:-translate-y-1 transition-transform duration-300`}>
-                                            <div className="relative">
-                                                {pub.image ? (
-                                                    <img
-                                                        src={`/storage/${pub.image}`}
-                                                        alt={pub.title}
-                                                        className="w-full h-48 object-cover"
-                                                    />
-                                                ) : (
-                                                    <div className="w-full h-48 bg-gradient-to-r from-green-700 to-green-500 flex items-center justify-center">
-                                                        <FiFileText className="w-12 h-12 text-white" />
-                                                    </div>
-                                                )}
-                                                <div className="absolute top-3 right-3 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-green-800 dark:text-green-400 text-xs px-2 py-1 rounded-md font-medium">
+                                        <div className="relative h-48 overflow-hidden">
+                                            {pub.image ? (
+                                                <img
+                                                    src={`/storage/${pub.image}`}
+                                                    alt={pub.title}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-gradient-to-br from-green-700 to-green-500 flex items-center justify-center group-hover:opacity-90 transition-opacity">
+                                                    <FiFileText className="w-10 h-10 text-white/90" />
+                                                </div>
+                                            )}
+                                            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent pointer-events-none"></div>
+                                            <div className="absolute bottom-3 right-3">
+                                                <div className="px-2.5 py-1 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm text-green-800 dark:text-green-400 text-xs font-medium rounded-full">
                                                     {new Date(pub.created_at).toLocaleDateString('id-ID', {
                                                         day: 'numeric',
                                                         month: 'short',
@@ -248,32 +295,42 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                                     })}
                                                 </div>
                                             </div>
-                                            <div className="p-5">
-                                                <h3 className={`text-xl font-bold mb-3 ${theme.primary} line-clamp-2`}>
-                                                    {pub.title}
-                                                </h3>
-                                                <div className="flex items-center gap-2 mb-4">
-                                                    <FiUsers className="text-green-600 dark:text-green-500" />
-                                                    <span className={`text-sm ${theme.text.secondary}`}>
-                                                        {pub.user.name}
-                                                    </span>
-                                                </div>
+                                        </div>
+
+                                        <div className="p-5 flex-grow flex flex-col">
+                                            <h3 className={`text-lg font-bold mb-3 ${theme.primary} line-clamp-2 group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors`}>
+                                                {pub.title}
+                                            </h3>
+
+                                            {/* Tambahkan deskripsi singkat */}
+                                            <p className={`${theme.text.secondary} text-sm mb-3 line-clamp-2`}>
+                                                {pub.description ||
+                                                    "Penelitian ini menyajikan studi komprehensif mengenai aspek penting dalam praktik kesehatan modern."}
+                                            </p>
+
+                                            <div className="flex items-center gap-2 mb-4 mt-auto">
+                                                <FiUsers className="text-green-600 dark:text-green-500" />
+                                                <span className={`text-sm ${theme.text.secondary}`}>
+                                                    {pub.user.name}
+                                                </span>
+                                            </div>
+                                            <div className="pt-4 border-t border-gray-100 dark:border-gray-700 mt-auto">
                                                 <Link
                                                     href={route('publications.show', pub.id)}
-                                                    className="text-green-700 dark:text-green-500 hover:text-green-900 dark:hover:text-green-400 font-medium flex items-center gap-1 group"
+                                                    className="inline-flex items-center gap-1 text-green-700 dark:text-green-500 hover:text-green-900 dark:hover:text-green-400 font-medium group/link w-full justify-between"
                                                 >
-                                                    Baca Selengkapnya
-                                                    <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                                                    <span>Baca Selengkapnya</span>
+                                                    <FiArrowRight className="group-hover/link:translate-x-1 transition-transform" />
                                                 </Link>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </>
                     )}
 
-                    <div className="text-center mt-16">
+                    <div className="text-center mt-10">
                         <Link
                             href={route('publications')}
                             className="inline-flex items-center gap-2 bg-green-800 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-md"
@@ -284,7 +341,6 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                     </div>
                 </div>
             </section>
-
             {/* Katalog Buku Section - Horizontal Scroll */}
             {Array.isArray(catalogs) ? (
                 catalogs.length > 0 ? (

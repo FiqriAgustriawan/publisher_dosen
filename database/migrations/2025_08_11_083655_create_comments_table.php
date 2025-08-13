@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('publication_id')->constrained()->onDelete('cascade');
             $table->string('nama');
             $table->string('email');
             $table->text('komentar');
+            $table->enum('status', ['approved', 'pending', 'rejected'])->default('pending');
+            $table->ipAddress('ip_address')->nullable();
             $table->timestamps();
         });
     }
