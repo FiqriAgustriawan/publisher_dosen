@@ -10,7 +10,7 @@ export const themeConfig = {
             primary: 'text-gray-900',
             secondary: 'text-gray-700',
             muted: 'text-gray-500',
-            light: 'text-gray-600'
+            light: 'text-gray-200'
         },
         card: 'bg-white',
         border: 'border-gray-200',

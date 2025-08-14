@@ -34,8 +34,7 @@ export default function PublicationDetail() {
       <Head title={publication.title} />
 
       <div className={`${theme.background} min-h-screen`}>
-        <Navbar />
-
+      
         {/* Breadcrumbs */}
         <div className={`${theme.background} py-4 border-b ${theme.border}`}>
           <div className="container mx-auto px-4">
@@ -75,7 +74,7 @@ export default function PublicationDetail() {
 
                 <div className="p-6 md:p-8">
                   {/* Title and metadata */}
-                  <h1 className={`text-3xl font-bold mb-4 ${theme.primary}`}>
+                  <h1 className={`text-3xl font-bold mb-4 ${theme.text.primary}`}>
                     {publication.title}
                   </h1>
 

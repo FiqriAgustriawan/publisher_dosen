@@ -24,7 +24,7 @@ export default function Contact() {
         <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-5 bg-repeat" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${theme.primary}`}>
+            <h1 className={`text-4xl md:text-5xl font-bold mb-4 ${theme.text.primary}`}>
               Hubungi Kami
             </h1>
             <p className={`text-lg ${theme.text.primary} max-w-2xl mx-auto`}>
@@ -37,7 +37,7 @@ export default function Contact() {
             <div className={`${theme.card} rounded-2xl p-8 shadow-lg ${theme.border} h-fit`}>
               <div className="space-y-8">
                 <div>
-                  <h2 className={`text-2xl font-bold mb-6 ${theme.primary} flex items-center gap-2`}>
+                  <h2 className={`text-2xl font-bold mb-6 ${theme.text.primary} flex items-center gap-2`}>
                     <FiInfo className="w-6 h-6" />
                     Tentang Lembaga
                   </h2>
@@ -50,7 +50,7 @@ export default function Contact() {
                 </div>
 
                 <div>
-                  <h3 className={`text-lg font-semibold mb-3 ${theme.primary} flex items-center gap-2`}>
+                  <h3 className={`text-lg font-semibold mb-3 ${theme.text.primary} flex items-center gap-2`}>
                     <FiGlobe className="w-5 h-5" />
                     Legalitas
                   </h3>
@@ -65,12 +65,12 @@ export default function Contact() {
 
             {/* Contact Details Card */}
             <div className={`${theme.card} rounded-2xl p-8 shadow-lg ${theme.border}`}>
-              <h2 className={`text-2xl font-bold mb-6 ${theme.primary}`}>
+              <h2 className={`text-2xl font-bold mb-6 ${theme.text.primary}`}>
                 Informasi Kontak
               </h2>
               <div className="space-y-6">
                 <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
-                  <FiMapPin className={`w-6 h-6 mt-1 ${theme.primary} flex-shrink-0`} />
+                  <FiMapPin className={`w-6 h-6 mt-1 ${theme.text.primary} flex-shrink-0`} />
                   <div>
                     <h3 className={`font-semibold mb-2 ${theme.text.primary}`}>Alamat Kantor</h3>
                     <p className={`${theme.text.primary}`}>
@@ -84,7 +84,7 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
-                  <FiClock className={`w-6 h-6 mt-1 ${theme.primary} flex-shrink-0`} />
+                  <FiClock className={`w-6 h-6 mt-1 ${theme.text.primary} flex-shrink-0`} />
                   <div>
                     <h3 className={`font-semibold mb-2 ${theme.text.primary}`}>Jam Operasional</h3>
                     <p className={`${theme.text.primary}`}>
@@ -96,7 +96,7 @@ export default function Contact() {
 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
-                    <FiPhone className={`w-6 h-6 mt-1 ${theme.primary} flex-shrink-0`} />
+                    <FiPhone className={`w-6 h-6 mt-1 ${theme.text.primary} flex-shrink-0`} />
                     <div>
                       <h3 className={`font-semibold mb-2 ${theme.text.primary}`}>Telepon</h3>
                       <p className={`${theme.text.primary}`}>
@@ -107,7 +107,7 @@ export default function Contact() {
                   </div>
 
                   <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition-colors">
-                    <FiMail className={`w-6 h-6 mt-1 ${theme.primary} flex-shrink-0`} />
+                    <FiMail className={`w-6 h-6 mt-1 ${theme.text.primary} flex-shrink-0`} />
                     <div>
                       <h3 className={`font-semibold mb-2 ${theme.text.primary}`}>Email</h3>
                       <a

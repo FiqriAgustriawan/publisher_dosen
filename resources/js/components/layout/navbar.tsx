@@ -35,10 +35,10 @@ export default function Navbar() {
             <img src="/images/logo.png" alt="CAHJ Logo" className="h-8 md:h-12 w-auto" />
             <div className="flex flex-col">
               <h1 className={`font-bold text-xs md:text-lg ${theme.headerText} leading-tight`}>
-                CELEBES ADVANCE
+          CELEBES HEALTH
               </h1>
               <p className={`text-[10px] md:text-sm ${theme.text.light} leading-tight`}>
-                HEALTH JOURNAL
+           JOURNAL
               </p>
             </div>
           </div>

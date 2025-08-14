@@ -63,12 +63,12 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
             <Head title="Celebes Advance Health Journal" />
             <Navbar />
 
-            {/* Hero Section */}
+                       {/* Hero Section */}
             <section className="bg-gradient-to-r from-green-800 to-green-700 text-white py-24 relative overflow-hidden">
                 {/* Background decorative elements */}
                 <div className="absolute top-0 right-0 w-1/2 h-full bg-white opacity-5 skew-x-12 transform -translate-x-20"></div>
                 <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10 bg-repeat"></div>
-
+            
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
                         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -77,7 +77,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                     Jurnal Kesehatan Terpercaya
                                 </span>
                                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                                    CELEBES ADVANCE HEALTH JOURNAL
+                                    CELEBES HEALTH JOURNAL
                                 </h1>
                                 <p className="text-xl text-white/90 mb-8">
                                     Platform Publikasi Inovasi Riset dan Pengabdian Masyarakat di bidang Kesehatan
@@ -92,7 +92,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                     </Link>
                                     <Link
                                         href={route('catalogs.index')}
-                                        className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors"
+                                        className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition-colors flex items-center justify-center space-x-2 group"
                                     >
                                         Katalog Buku
                                     </Link>
@@ -111,9 +111,8 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                     </div>
                 </div>
             </section>
-
             {/* Tentang Lembaga Section */}
-            <section className="py-20 relative overflow-hidden dark:bg-green-900/20  " data-aos="fade-up">
+            <section className={`py-20 relative overflow-hidden ${theme.background}`} data-aos="fade-up">
                 <div className="absolute -right-32 -bottom-32 w-96 h-96 bg-green-100 dark:bg-green-900/20 rounded-full opacity-50"></div>
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
@@ -121,14 +120,14 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                             <div className="order-2 md:order-1">
                                 <div className="relative">
                                     <div className="absolute -top-6 -left-6 w-24 h-24 bg-green-100 dark:bg-green-900/40 rounded-lg z-0"></div>
-                                    <div className="bg-white dark:bg-gray-800 shadow-xl rounded-lg p-8 relative z-10 border-t-4 border-green-700">
+                                    <div className={`${theme.card} shadow-xl rounded-lg p-8 relative z-10 border-t-4 border-green-700 dark:border-green-600`}>
                                         <div className="flex items-center mb-6">
                                             <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-full">
                                                 <FiShield className="w-6 h-6 text-green-700 dark:text-green-400" />
                                             </div>
-                                            <h3 className="ml-4 text-lg font-bold text-gray-800 dark:text-white">Legalitas</h3>
+                                            <h3 className={`ml-4 text-lg font-bold ${theme.text.primary}`}>Legalitas</h3>
                                         </div>
-                                        <div className="space-y-2 text-gray-700 dark:text-gray-300">
+                                        <div className={`space-y-2 ${theme.text.secondary}`}>
                                             <p className="font-medium">SK Kementerian Hukum dan HAM RI</p>
                                             <p>No. AHU-033395.AH.01.30. Tahun 2025</p>
                                             <p>Tanggal 2 Juli 2025</p>
@@ -140,7 +139,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                 <span className="inline-block px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-sm font-medium mb-3">
                                     TENTANG KAMI
                                 </span>
-                                <h2 className={`text-3xl md:text-4xl font-bold ${theme.primary} mb-6`}>
+                                <h2 className={`text-3xl md:text-4xl font-bold ${theme.text.primary} mb-6`}>
                                     Tentang Lembaga
                                 </h2>
                                 <p className={`text-lg ${theme.text.primary} mb-6 leading-relaxed`}>
@@ -173,26 +172,25 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
             </section>
 
             {/* Publications Section - Modern Card Layout */}
-            <section className="py-16 bg-gray-50 dark:bg-gray-900" data-aos="fade-up">
+            <section className={`py-16 bg-gray-50 dark:bg-gray-900 ${theme.background}`} data-aos="fade-up">
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
                         <div>
                             <span className="inline-block px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-sm font-medium mb-3">
                                 PENELITIAN TERBARU
                             </span>
-                            <h2 className={`text-3xl font-bold ${theme.primary}`}>
+                            <h2 className={`text-3xl font-bold ${theme.text.primary}`}>
                                 Publikasi Terkini
                             </h2>
                         </div>
-
                     </div>
 
                     {publications.length === 0 ? (
-                        <div className={`${theme.card} p-10 rounded-xl text-center border border-gray-200 dark:border-gray-700 shadow-md`}>
+                        <div className={`${theme.card} p-10 rounded-xl text-center ${theme.border} border shadow-md`}>
                             <div className="bg-green-50 dark:bg-green-900/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
                                 <FiFileText className="w-10 h-10 text-green-500 dark:text-green-400" />
                             </div>
-                            <h3 className={`text-2xl font-bold mb-3 ${theme.primary}`}>Publikasi Akan Segera Hadir</h3>
+                            <h3 className={`text-2xl font-bold mb-3 ${theme.text.primary}`}>Publikasi Akan Segera Hadir</h3>
                             <p className={`${theme.text.secondary} max-w-lg mx-auto mb-6`}>
                                 Kami sedang mempersiapkan publikasi-publikasi berkualitas untuk Anda. Kunjungi kembali halaman ini dalam waktu dekat.
                             </p>
@@ -209,7 +207,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                             {/* Featured Publication - Large Card */}
                             {publications.length > 0 && (
                                 <div className="mb-10" data-aos="fade-up">
-                                    <div className="grid md:grid-cols-5 gap-6 bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700">
+                                    <div className={`grid md:grid-cols-5 gap-6 ${theme.card} rounded-2xl overflow-hidden shadow-lg ${theme.border} border`}>
                                         <div className="md:col-span-2 h-64 md:h-auto relative">
                                             {publications[0].image ? (
                                                 <img
@@ -244,9 +242,8 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                                         })}
                                                     </span>
                                                 </div>
-                                                <h3 className={`text-2xl font-bold ${theme.primary} mb-4`}>{publications[0].title}</h3>
+                                                <h3 className={`text-2xl font-bold ${theme.text.primary} mb-4`}>{publications[0].title}</h3>
 
-                                                {/* Tambahkan deskripsi singkat di sini */}
                                                 <p className={`${theme.text.secondary} mb-6 line-clamp-3`}>
                                                     {publications[0].description ||
                                                         "Publikasi ini membahas tentang inovasi terbaru dalam bidang kesehatan masyarakat dengan pendekatan yang komprehensif dan berbasis bukti ilmiah."}
@@ -269,7 +266,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                 {publications.slice(1, 4).map((pub, index) => (
                                     <div
                                         key={pub.id}
-                                        className="group relative overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full border border-gray-100 dark:border-gray-700"
+                                        className={`group relative overflow-hidden rounded-xl ${theme.card} shadow-md hover:shadow-xl transition-all duration-300 flex flex-col h-full ${theme.border} border`}
                                         data-aos="fade-up"
                                         data-aos-delay={index * 100}
                                     >
@@ -298,11 +295,10 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                         </div>
 
                                         <div className="p-5 flex-grow flex flex-col">
-                                            <h3 className={`text-lg font-bold mb-3 ${theme.primary} line-clamp-2 group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors`}>
+                                            <h3 className={`text-lg font-bold mb-3 ${theme.text.primary} line-clamp-2 group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors`}>
                                                 {pub.title}
                                             </h3>
 
-                                            {/* Tambahkan deskripsi singkat */}
                                             <p className={`${theme.text.secondary} text-sm mb-3 line-clamp-2`}>
                                                 {pub.description ||
                                                     "Penelitian ini menyajikan studi komprehensif mengenai aspek penting dalam praktik kesehatan modern."}
@@ -314,7 +310,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                                     {pub.user.name}
                                                 </span>
                                             </div>
-                                            <div className="pt-4 border-t border-gray-100 dark:border-gray-700 mt-auto">
+                                            <div className={`pt-4 ${theme.border} border-t mt-auto`}>
                                                 <Link
                                                     href={route('publications.show', pub.id)}
                                                     className="inline-flex items-center gap-1 text-green-700 dark:text-green-500 hover:text-green-900 dark:hover:text-green-400 font-medium group/link w-full justify-between"
@@ -341,17 +337,18 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                     </div>
                 </div>
             </section>
-            {/* Katalog Buku Section - Horizontal Scroll */}
+
+            {/* Katalog Buku Section */}
             {Array.isArray(catalogs) ? (
                 catalogs.length > 0 ? (
-                    <section className="py-16" data-aos="fade-up">
+                    <section className={`py-16 ${theme.background}`} data-aos="fade-up">
                         <div className="container mx-auto px-4">
                             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
                                 <div>
                                     <span className="inline-block px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-sm font-medium mb-3">
                                         SUMBER PENGETAHUAN
                                     </span>
-                                    <h2 className={`text-3xl font-bold ${theme.primary}`}>
+                                    <h2 className={`text-3xl font-bold ${theme.text.primary}`}>
                                         Katalog Buku
                                     </h2>
                                 </div>
@@ -374,7 +371,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                             data-aos="fade-up"
                                             data-aos-delay={index * 50}
                                         >
-                                            <div className={`h-full ${theme.card} rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 flex flex-col`}>
+                                            <div className={`h-full ${theme.card} rounded-xl shadow-lg overflow-hidden group hover:shadow-xl transition-all duration-300 ${theme.border} border flex flex-col`}>
                                                 <div className="relative h-48 overflow-hidden">
                                                     {catalog.gambar_sampul ? (
                                                         <img
@@ -397,13 +394,13 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                                     </div>
                                                 </div>
                                                 <div className="p-5 flex-grow flex flex-col">
-                                                    <h3 className={`text-lg font-bold mb-2 ${theme.primary} line-clamp-1`}>
+                                                    <h3 className={`text-lg font-bold mb-2 ${theme.text.primary} line-clamp-1`}>
                                                         {catalog.nama}
                                                     </h3>
                                                     <p className={`${theme.text.secondary} text-sm mb-4 line-clamp-3 flex-grow`}>
                                                         {catalog.deskripsi}
                                                     </p>
-                                                    <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 mt-2">
+                                                    <div className={`flex items-center text-xs ${theme.text.muted} mt-2`}>
                                                         <FiCalendar className="mr-1" />
                                                         <span>
                                                             {new Date(catalog.created_at).toLocaleDateString('id-ID', {
@@ -419,9 +416,9 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                     ))}
                                 </div>
 
-                                {/* Left/Right shadows for scroll indication */}
-                                <div className="absolute left-0 top-0 bottom-8 w-12 bg-gradient-to-r from-white to-transparent dark:from-gray-900 dark:to-transparent pointer-events-none"></div>
-                                <div className="absolute right-0 top-0 bottom-8 w-12 bg-gradient-to-l from-white to-transparent dark:from-gray-900 dark:to-transparent pointer-events-none"></div>
+                                {/* Left/Right shadows untuk scroll indication */}
+                                <div className={`absolute left-0 top-0 bottom-8 w-12 bg-gradient-to-r from-white to-transparent dark:from-gray-900 dark:to-transparent pointer-events-none`}></div>
+                                <div className={`absolute right-0 top-0 bottom-8 w-12 bg-gradient-to-l from-white to-transparent dark:from-gray-900 dark:to-transparent pointer-events-none`}></div>
                             </div>
 
                             <div className="text-center mt-12">
@@ -436,24 +433,24 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                         </div>
                     </section>
                 ) : (
-                    <section className="py-16" data-aos="fade-up">
+                    <section className={`py-16 ${theme.background}`} data-aos="fade-up">
                         <div className="container mx-auto px-4">
                             <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
                                 <div>
                                     <span className="inline-block px-3 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-sm font-medium mb-3">
                                         SUMBER PENGETAHUAN
                                     </span>
-                                    <h2 className={`text-3xl font-bold ${theme.primary}`}>
+                                    <h2 className={`text-3xl font-bold ${theme.text.primary}`}>
                                         Katalog Buku
                                     </h2>
                                 </div>
                             </div>
 
-                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 text-center border border-gray-200 dark:border-gray-700">
+                            <div className={`${theme.card} rounded-xl shadow-md p-8 text-center ${theme.border} border`}>
                                 <div className="bg-green-50 dark:bg-green-900/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                                     <FiBook className="w-10 h-10 text-green-600 dark:text-green-400" />
                                 </div>
-                                <h3 className={`text-2xl font-bold ${theme.primary} mb-4`}>
+                                <h3 className={`text-2xl font-bold ${theme.text.primary} mb-4`}>
                                     Katalog Buku Segera Hadir
                                 </h3>
                                 <p className={`${theme.text.secondary} max-w-lg mx-auto mb-6`}>
@@ -471,11 +468,11 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                     </section>
                 )
             ) : (
-                <section className="py-16 bg-gray-50 dark:bg-gray-900">
+                <section className={`py-16 bg-gray-50 dark:bg-gray-900 ${theme.background}`}>
                     <div className="container mx-auto px-4 text-center">
-                        <h2 className={`text-3xl font-bold ${theme.primary} mb-6`}>Katalog Buku</h2>
+                        <h2 className={`text-3xl font-bold ${theme.text.primary} mb-6`}>Katalog Buku</h2>
                         <div className="py-12">
-                            <p className="text-lg text-gray-600 dark:text-gray-400">
+                            <p className={`text-lg ${theme.text.secondary}`}>
                                 Gagal memuat data katalog
                             </p>
                         </div>
