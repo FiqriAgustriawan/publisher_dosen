@@ -63,12 +63,12 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
             <Head title="Celebes Advance Health Journal" />
             <Navbar />
 
-                       {/* Hero Section */}
+            {/* Hero Section */}
             <section className="bg-gradient-to-r from-green-800 to-green-700 text-white py-24 relative overflow-hidden">
                 {/* Background decorative elements */}
                 <div className="absolute top-0 right-0 w-1/2 h-full bg-white opacity-5 skew-x-12 transform -translate-x-20"></div>
                 <div className="absolute inset-0 bg-[url('/pattern.png')] opacity-10 bg-repeat"></div>
-            
+
                 <div className="container mx-auto px-4 relative z-10">
                     <div className="max-w-6xl mx-auto">
                         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -77,7 +77,7 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                     Jurnal Kesehatan Terpercaya
                                 </span>
                                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                                    CELEBES HEALTH JOURNAL
+                                    PT CELEBES HEALTH JOURNAL
                                 </h1>
                                 <p className="text-xl text-white/90 mb-8">
                                     Platform Publikasi Inovasi Riset dan Pengabdian Masyarakat di bidang Kesehatan
@@ -99,11 +99,11 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                 </div>
                             </div>
                             <div className="hidden md:block text-center" data-aos="fade-left">
-                                <div className="bg-white/90 backdrop-blur-sm p-8 rounded-full inline-block">
+                                <div className="  inline-block">
                                     <img
-                                        src="/images/logo.png"
+                                        src="/images/new-logo.png"
                                         alt="CAHJ Logo"
-                                        className="w-full max-w-xs mx-auto drop-shadow-xl"
+                                        className="w-full max-w-lg mx-auto drop-shadow-xl"
                                     />
                                 </div>
                             </div>

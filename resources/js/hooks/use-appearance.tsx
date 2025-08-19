@@ -14,7 +14,7 @@ export const themeConfig = {
         },
         card: 'bg-white',
         border: 'border-gray-200',
-        header: 'bg-green-700',
+        header: 'bg-green-800',
         headerText: 'text-white'
     },
     dark: {

@@ -77,7 +77,7 @@ export default function Publications({ publications }: { publications: Publicati
       {/* Publications Grid Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <h2 className={`text-2xl font-bold mb-8 ${theme.primary}`}>
+          <h2 className={`text-2xl font-bold mb-8 ${theme.text.primary}`}>
             {filteredPublications.length > 0
               ? `${filteredPublications.length} Publikasi Tersedia`
               : 'Tidak ada publikasi yang sesuai dengan pencarian Anda'}

@@ -105,7 +105,7 @@ export default function CatalogIndex({ catalogs }: { catalogs: Catalog[] }) {
             </div>
           ) : (
             <>
-              <h2 className={`text-2xl font-bold ${theme.primary} mb-8`}>
+              <h2 className={`text-2xl font-bold ${theme.text.primary} mb-8`}>
                 {searchQuery ? `Hasil Pencarian: ${filteredCatalogs.length} buku ditemukan` : 'Koleksi Buku Terbaru'}
               </h2>
 

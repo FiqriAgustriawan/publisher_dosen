@@ -32,13 +32,13 @@ export default function Navbar() {
       >
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center space-x-2 md:space-x-3">
-            <img src="/images/logo.png" alt="CAHJ Logo" className="h-8 md:h-12 w-auto" />
+            <img src="/images/new-logo.png" alt="CAHJ Logo" className="h-8 md:h-12 w-auto" />
             <div className="flex flex-col">
               <h1 className={`font-bold text-xs md:text-lg ${theme.headerText} leading-tight`}>
-          CELEBES HEALTH
+                CELEBES HEALTH
               </h1>
               <p className={`text-[10px] md:text-sm ${theme.text.light} leading-tight`}>
-           JOURNAL
+                JOURNAL
               </p>
             </div>
           </div>
@@ -69,10 +69,10 @@ export default function Navbar() {
             >
               Kontak
             </Link>
-            
-            {/* Gunakan AppearanceToggleTab yang sudah ada */}
-            <AppearanceToggleTab className="scale-90" />
-            
+
+            {/* Icons-only theme toggle untuk desktop */}
+            <AppearanceToggleTab variant="icons-only" className="scale-90" />
+
             {auth?.user && (
               <Link
                 href={route('dashboard')}
@@ -113,7 +113,7 @@ export default function Navbar() {
           }`}
       >
         <div className="flex justify-between items-center mb-8">
-          <img src="/images/logo.png" alt="CAHJ Logo" className="h-10 w-auto" />
+          <img src="/images/new-logo.png" alt="CAHJ Logo" className="h-10 w-auto" />
           <button
             onClick={() => setIsOpen(false)}
             className="p-2 rounded-full hover:bg-green-700"
@@ -161,10 +161,12 @@ export default function Navbar() {
             Kontak
           </Link>
 
-          {/* Appearance toggle untuk mobile */}
+          {/* Icons-only theme toggle untuk mobile */}
           <div className="px-4 py-2">
-            <p className={`text-sm ${theme.headerText} mb-2`}>Tema</p>
-            <AppearanceToggleTab className="w-full" />
+            <div className="flex items-center justify-between">
+              <p className={`text-sm ${theme.headerText}`}>Tema</p>
+              <AppearanceToggleTab variant="icons-only" />
+            </div>
           </div>
 
           {auth?.user && (
