@@ -61,7 +61,11 @@ export default function Footer() {
             <ul className="space-y-4 text-green-100">
               <li className="flex items-start">
                 <FiMapPin className="mr-3 h-6 w-6 text-green-300 flex-shrink-0" />
-                <span>Jl. Perintis Kemerdekaan KM.10, Makassar, Sulawesi Selatan, Indonesia</span>
+                <span>Jl. Soppeng Raya Blok G No. 72
+                  Bumi Sudiang Permai (BSP),
+                  Kelurahan Laikang, Kecamatan Biringkanaya,
+                  Kota Makassar, 90242
+                  Sulawesi Selatan, Indonesia</span>
               </li>
               <li className="flex items-center">
                 <FiPhone className="mr-3 h-5 w-5 text-green-300" />
@@ -69,7 +73,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center">
                 <FiMail className="mr-3 h-5 w-5 text-green-300" />
-                <span>info@celebeshealthjournal.com</span>
+                <span>ismailskpns@gmail.com</span>
               </li>
               <li className="flex items-center">
                 <FiGlobe className="mr-3 h-5 w-5 text-green-300" />

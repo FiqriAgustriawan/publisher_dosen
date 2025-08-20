@@ -10,7 +10,6 @@ export default defineConfig(({ mode }) => ({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
             ssr: 'resources/js/ssr.tsx',
             refresh: true,
-            publicDirectory: 'public',
         }),
         react(),
         tailwindcss(),

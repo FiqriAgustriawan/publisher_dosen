@@ -18,6 +18,10 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # Allow access to Vite build assets
+    RewriteCond %{REQUEST_URI} ^/build/
+    RewriteRule ^ - [L]
 </IfModule>
 
 # Security Headers
@@ -55,3 +59,8 @@
     ExpiresByType text/javascript "access plus 1 month"
     ExpiresByType application/javascript "access plus 1 month"
 </IfModule>
+
+# Allow static files
+<FilesMatch "\.(js|css|png|jpg|jpeg|gif|svg|webp|ico)$">
+    Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
