@@ -113,7 +113,15 @@ export default function Navbar() {
           }`}
       >
         <div className="flex justify-between items-center mb-8">
-          <img src="/images/new-logo.png" alt="CAHJ Logo" className="h-10 w-auto" />
+          <img
+            src="/images/new-logo.png"
+            alt="CAHJ Logo"
+            className="h-8 md:h-12 w-auto"
+            loading="eager"
+            decoding="async"
+            width="48"
+            height="48"
+          />
           <button
             onClick={() => setIsOpen(false)}
             className="p-2 rounded-full hover:bg-green-700"

@@ -8,7 +8,7 @@ import { initializeTheme } from './hooks/use-appearance';
 // Initialize theme as early as possible untuk menghindari flash
 initializeTheme();
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'celebes';
 
 createInertiaApp({
     title: (title) => title ? `${title} - ${appName}` : appName,

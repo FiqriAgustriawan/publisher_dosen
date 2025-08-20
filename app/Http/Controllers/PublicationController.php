@@ -20,15 +20,36 @@ class PublicationController extends Controller
 
   public function show(Publication $publication)
   {
-    // Mengambil hanya komentar yang sudah disetujui
-    $approved_comments = $publication->comments()
+    // Load approved comments with proper ordering
+    $approvedComments = $publication->comments()
       ->where('status', 'approved')
       ->orderBy('created_at', 'desc')
-      ->get();
+      ->get()
+      ->map(function ($comment) {
+        return [
+          'id' => $comment->id,
+          'nama' => $comment->nama,
+          'komentar' => $comment->komentar,
+          'created_at' => $comment->created_at->toISOString(),
+          'status' => $comment->status,
+          'formatted_date' => $comment->created_at->format('d M Y, H:i')
+        ];
+      });
 
     return Inertia::render('publication/PublicationDetail', [
-      'publication' => $publication->load('user'),
-      'approved_comments' => $approved_comments
+      'publication' => [
+        'id' => $publication->id,
+        'title' => $publication->title,
+        'image' => $publication->image,
+        'link_route' => $publication->link_route,
+        'description' => $publication->description,
+        'created_at' => $publication->created_at->toISOString(),
+        'user' => [
+          'name' => $publication->user->name
+        ]
+      ],
+      'approved_comments' => $approvedComments,
+      'recaptcha_site_key' => config('services.recaptcha.site_key', '')
     ]);
   }
 

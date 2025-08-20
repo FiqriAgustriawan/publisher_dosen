@@ -4,7 +4,7 @@ import laravel from 'laravel-vite-plugin';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
@@ -16,9 +16,9 @@ export default defineConfig({
         tailwindcss(),
     ],
      define: {
-        // Tambahkan placeholder untuk process.env yang digunakan di komponent
         'process.env': {
-            MIX_RECAPTCHA_SITE_KEY: 'development-key',
+            NODE_ENV: JSON.stringify(mode),
+            MIX_RECAPTCHA_SITE_KEY: JSON.stringify(process.env.MIX_RECAPTCHA_SITE_KEY || 'development-key'),
         },
     },
     esbuild: {
@@ -29,4 +29,4 @@ export default defineConfig({
             'ziggy-js': resolve(__dirname, 'vendor/tightenco/ziggy'),
         },
     },
-});
+}));

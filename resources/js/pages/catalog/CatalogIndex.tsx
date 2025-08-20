@@ -11,7 +11,18 @@ import {
   FiDownload,
   FiArrowRight
 } from 'react-icons/fi';
-import { useState } from 'react';
+import { useState, lazy, Suspense, useEffect, memo, useMemo, useCallback } from 'react';
+
+// Import AOS directly instead of lazy loading
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
+// Loading component
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center p-8">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
+  </div>
+);
 
 interface Catalog {
   id: number;
@@ -25,27 +36,129 @@ interface Catalog {
   };
 }
 
+// Memoize catalog cards
+const CatalogCard = memo(({ catalog, theme, formatDate }: any) => (
+  <div className={`${theme.card} rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow border ${theme.border}`}>
+    <Link href={route('catalogs.show', catalog.id)}>
+      <div className="relative h-64 bg-gray-200 dark:bg-gray-700">
+        {catalog.gambar_sampul ? (
+          <picture>
+            <source
+              srcSet={`/storage/webp/${catalog.gambar_sampul.replace(/\.(jpg|jpeg|png)$/i, '.webp')}`}
+              type="image/webp"
+            />
+            <img
+              src={`/storage/${catalog.gambar_sampul}`}
+              alt={catalog.nama}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+              decoding="async"
+              width="300"
+              height="400"
+            />
+          </picture>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+            <FiBook className="w-16 h-16 text-gray-400 dark:text-gray-500" />
+          </div>
+        )}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 pt-8">
+          <h3 className="text-xl font-bold text-white line-clamp-2">{catalog.nama}</h3>
+        </div>
+      </div>
+    </Link>
+
+    <div className="p-4">
+      <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+        <FiUser className="mr-1" />
+        <span>{catalog.user?.name || 'Admin'}</span>
+        <span className="mx-2">•</span>
+        <FiCalendar className="mr-1" />
+        <span>{formatDate(catalog.created_at)}</span>
+      </div>
+
+      <p className={`${theme.text.primary} mb-4 line-clamp-3 text-sm h-16`}>
+        {catalog.deskripsi}
+      </p>
+
+      <div className="flex justify-between items-center">
+        <Link
+          href={route('catalogs.show', catalog.id)}
+          className="text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 font-medium flex items-center gap-1 text-sm"
+        >
+          <FiEye className="w-4 h-4" />
+          <span>Detail</span>
+        </Link>
+
+        {catalog.pdf_file_buku && (
+          <Link
+            href={route('catalogs.download', catalog.id)}
+            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-xs flex items-center gap-1"
+          >
+            <FiDownload className="w-3 h-3" />
+            <span>Unduh PDF</span>
+          </Link>
+        )}
+      </div>
+    </div>
+  </div>
+));
+
 export default function CatalogIndex({ catalogs }: { catalogs: Catalog[] }) {
   const { theme } = useAppearance();
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Initialize AOS
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
-  const filteredCatalogs = catalogs.filter(catalog =>
-    catalog.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    catalog.deskripsi.toLowerCase().includes(searchQuery.toLowerCase())
+  // Memoize expensive calculations
+  const filteredCatalogs = useMemo(() => 
+    catalogs.filter(catalog =>
+      catalog.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      catalog.deskripsi.toLowerCase().includes(searchQuery.toLowerCase())
+    ), [catalogs, searchQuery]
   );
 
-  const formatDate = (dateString: string) => {
+  const formatDate = useCallback((dateString: string) => {
     return new Date(dateString).toLocaleDateString('id-ID', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
-  };
+  }, []);
 
   return (
     <div className={`${theme.background} min-h-screen flex flex-col`}>
-      <Head title="Katalog Buku" />
-      <Navbar />
+      <Head title="Katalog Buku">
+        {/* Preload critical fonts */}
+        <link 
+          rel="preload" 
+          href="/fonts/inter.woff2" 
+          as="font" 
+          type="font/woff2" 
+          crossOrigin="anonymous" 
+        />
+        
+        {/* Preload first few images */}
+        {catalogs.slice(0, 4).map((catalog) => 
+          catalog.gambar_sampul && (
+            <link
+              key={catalog.id}
+              rel="preload"
+              href={`/storage/${catalog.gambar_sampul}`}
+              as="image"
+            />
+          )
+        )}
+        
+        {/* DNS prefetch for external resources */}
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+      </Head>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Navbar />
+      </Suspense>
 
       {/* Hero Section dengan Kontras yang Lebih Baik */}
       <section className="bg-gradient-to-r from-green-900 to-green-700 py-20 text-white relative">
@@ -111,63 +224,12 @@ export default function CatalogIndex({ catalogs }: { catalogs: Catalog[] }) {
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {filteredCatalogs.map((catalog) => (
-                  <div
+                  <CatalogCard 
                     key={catalog.id}
-                    className={`${theme.card} rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow border ${theme.border}`}
-                  >
-                    <Link href={route('catalogs.show', catalog.id)}>
-                      <div className="relative h-64 bg-gray-200 dark:bg-gray-700">
-                        {catalog.gambar_sampul ? (
-                          <img
-                            src={`/storage/${catalog.gambar_sampul}`}
-                            alt={catalog.nama}
-                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <FiBook className="w-16 h-16 text-gray-400 dark:text-gray-500" />
-                          </div>
-                        )}
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4 pt-8">
-                          <h3 className="text-xl font-bold text-white line-clamp-2">{catalog.nama}</h3>
-                        </div>
-                      </div>
-                    </Link>
-
-                    <div className="p-4">
-                      <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
-                        <FiUser className="mr-1" />
-                        <span>{catalog.user?.name || 'Admin'}</span>
-                        <span className="mx-2">•</span>
-                        <FiCalendar className="mr-1" />
-                        <span>{formatDate(catalog.created_at)}</span>
-                      </div>
-
-                      <p className={`${theme.text.primary} mb-4 line-clamp-3 text-sm h-16`}>
-                        {catalog.deskripsi}
-                      </p>
-
-                      <div className="flex justify-between items-center">
-                        <Link
-                          href={route('catalogs.show', catalog.id)}
-                          className="text-green-600 hover:text-green-700 dark:text-green-500 dark:hover:text-green-400 font-medium flex items-center gap-1 text-sm"
-                        >
-                          <FiEye className="w-4 h-4" />
-                          <span>Detail</span>
-                        </Link>
-
-                        {catalog.pdf_file_buku && (
-                          <Link
-                            href={route('catalogs.download', catalog.id)}
-                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-xs flex items-center gap-1"
-                          >
-                            <FiDownload className="w-3 h-3" />
-                            <span>Unduh PDF</span>
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                    catalog={catalog}
+                    theme={theme}
+                    formatDate={formatDate}
+                  />
                 ))}
               </div>
             </>
@@ -175,7 +237,9 @@ export default function CatalogIndex({ catalogs }: { catalogs: Catalog[] }) {
         </div>
       </section>
 
-      <Footer />
+      <Suspense fallback={<LoadingSpinner />}>
+        <Footer />
+      </Suspense>
     </div>
   );
 }

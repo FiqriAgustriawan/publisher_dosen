@@ -104,6 +104,10 @@ export default function Welcome({ publications = [], catalogs = [] }: WelcomePro
                                         src="/images/new-logo.png"
                                         alt="CAHJ Logo"
                                         className="w-full max-w-lg mx-auto drop-shadow-xl"
+                                        loading="eager"
+                                        decoding="async"
+                                        width="512"
+                                        height="512"
                                     />
                                 </div>
                             </div>

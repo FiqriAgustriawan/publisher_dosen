@@ -13,7 +13,9 @@ use App\Models\Comment;
 Route::get('/', function () {
     return Inertia::render('Beranda', [
         'publications' => Publication::with('user')->latest()->take(6)->get(),
-        'catalogs' => Catalog::with('user')->latest()->take(4)->get()
+        'catalogs' => Catalog::with('user')->latest()->take(4)->get(),
+        'logo_path' => '/images/new-logo.png', // Tambahkan logo path
+        'app_name' => config('app.name', 'Celebes Health Journal')
     ]);
 })->name('home');
 
@@ -23,7 +25,10 @@ Route::get('/publications/{publication}', [PublicationController::class, 'show']
 
 // Contact page
 Route::get('/Contact', function () {
-    return Inertia::render('Contact');
+    return Inertia::render('Contact', [
+        'recaptcha_site_key' => config('services.recaptcha.site_key', ''),
+        'logo_path' => '/images/new-logo.png'
+    ]);
 })->name('contact');
 
 // Public catalog routes
@@ -41,8 +46,9 @@ Route::middleware(['auth'])->group(function () {
                 'totalPublications' => Publication::count(),
                 'totalCatalogs' => Catalog::count(),
                 'totalComments' => Comment::count(),
-                'pendingComments' => Comment::where('status', 'pending')->count() // Tambahkan ini
-            ]
+                'pendingComments' => Comment::where('status', 'pending')->count()
+            ],
+            'logo_path' => '/images/new-logo.png'
         ]);
     })->name('dashboard');
 
@@ -74,7 +80,8 @@ Route::fallback(function () {
     return Inertia::render('errors/Error', [
         'status' => 404,
         'message' => 'Halaman Tidak Ditemukan',
-        'description' => 'Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.'
+        'description' => 'Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.',
+        'logo_path' => '/images/new-logo.png'
     ]);
 });
 
