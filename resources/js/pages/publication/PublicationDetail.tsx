@@ -35,16 +35,14 @@ interface Comment {
   status: string;
 }
 
-// Extend Inertia's PageProps dengan index signature
 interface PageProps extends InertiaPageProps {
   publication: Publication;
   approved_comments: Comment[];
-  recaptcha_site_key: string;
-  [key: string]: any; // Index signature untuk memenuhi constraint
+  [key: string]: any;
 }
 
 export default function PublicationDetail() {
-  const { publication, approved_comments, recaptcha_site_key } = usePage<PageProps>().props;
+  const { publication, approved_comments } = usePage<PageProps>().props;
   const { theme } = useAppearance();
 
   const shareToFacebook = () => {
@@ -73,12 +71,7 @@ export default function PublicationDetail() {
 
   return (
     <Layout>
-      <Head title={publication.title}>
-        {/* Pass reCAPTCHA site key */}
-        <script>
-          {`window.recaptchaSiteKey = '${recaptcha_site_key}';`}
-        </script>
-      </Head>
+      <Head title={publication.title} />
 
       <div className={`${theme.background} min-h-screen`}>
         {/* Breadcrumbs */}
@@ -202,7 +195,7 @@ export default function PublicationDetail() {
                       </p>
                     </div>
                     <div className="flex gap-3">
-                      <button 
+                      <button
                         onClick={shareToFacebook}
                         className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-colors"
                         title="Bagikan ke Facebook"
@@ -211,7 +204,7 @@ export default function PublicationDetail() {
                           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                         </svg>
                       </button>
-                      <button 
+                      <button
                         onClick={shareToTwitter}
                         className="bg-blue-400 hover:bg-blue-500 text-white p-2 rounded-full transition-colors"
                         title="Bagikan ke Twitter"
@@ -220,7 +213,7 @@ export default function PublicationDetail() {
                           <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723 10.014 10.014 0 01-3.127 1.195 4.928 4.928 0 00-8.391 4.493 14.046 14.046 0 01-10.2-5.173 4.929 4.929 0 001.527 6.574 4.883 4.883 0 01-2.23-.616v.06a4.923 4.923 0 003.95 4.83 4.948 4.948 0 01-2.223.084 4.929 4.929 0 004.6 3.42 9.86 9.86 0 01-6.103 2.101 9.88 9.88 0 01-1.17-.07 13.9 13.9 0 007.55 2.213c9.056 0 14.01-7.5 14.01-14.007 0-.213-.005-.426-.015-.637a10.023 10.023 0 002.457-2.549z" />
                         </svg>
                       </button>
-                      <button 
+                      <button
                         onClick={shareToLinkedIn}
                         className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-colors"
                         title="Bagikan ke LinkedIn"
@@ -229,7 +222,7 @@ export default function PublicationDetail() {
                           <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.454C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
                         </svg>
                       </button>
-                      <button 
+                      <button
                         onClick={shareToWhatsApp}
                         className="bg-emerald-500 hover:bg-emerald-600 text-white p-2 rounded-full transition-colors"
                         title="Bagikan ke WhatsApp"
@@ -282,7 +275,7 @@ export default function PublicationDetail() {
                       Komentar ({approved_comments.length})
                     </h4>
                   </div>
-                  
+
                   {approved_comments.length > 0 ? (
                     <CommentList comments={approved_comments} />
                   ) : (

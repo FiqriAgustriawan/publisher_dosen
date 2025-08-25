@@ -30,7 +30,6 @@ class CommentController extends Controller
             'email' => 'required|email|max:100',
             'komentar' => 'required|string|min:5|max:1000',
             'publication_id' => 'required|exists:publications,id',
-            'recaptcha_token' => 'required|string', // Ubah dari g-recaptcha-response
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'nama.min' => 'Nama minimal 3 karakter.',
@@ -40,7 +39,6 @@ class CommentController extends Controller
             'komentar.required' => 'Komentar wajib diisi.',
             'komentar.min' => 'Komentar minimal 5 karakter.',
             'komentar.max' => 'Komentar maksimal 1000 karakter.',
-            'recaptcha_token.required' => 'Verifikasi reCAPTCHA wajib dilakukan.',
         ]);
 
         // Verifikasi reCAPTCHA untuk production

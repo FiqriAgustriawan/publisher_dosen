@@ -48,8 +48,7 @@ class PublicationController extends Controller
           'name' => $publication->user->name
         ]
       ],
-      'approved_comments' => $approvedComments,
-      'recaptcha_site_key' => config('services.recaptcha.site_key', '')
+      'approved_comments' => $approvedComments
     ]);
   }
 
